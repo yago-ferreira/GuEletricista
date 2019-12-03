@@ -102,8 +102,6 @@
 
 <!-- tabela contendo as informações de todos os orçamentos da API//-->
 <script>
-  // var x = 0
-
   axios.get('http://localhost:3000/orcamentos')
     .then(response => criaListaDinamicaApi(response.data))
     .catch(error => console.log(error))
@@ -135,19 +133,6 @@
       pEmail.innerHTML = ` ${orcamentos.email}`
       tdEmail.appendChild(pEmail)
       tr.appendChild(tdEmail)
-/*
-      //------ exibindo ID ----------------------
-      const tdId = document.createElement('td')
-      tdId.style.display = 'none';
-      const pId = document.createElement('p')
-      pId.setAttribute('id', 'Id_User' + x)
-      pId.style.display = 'none';
-
-      pId.innerHTML = ` ${orcamentos.id}`
-      tdId.appendChild(pId)
-      tr.appendChild(tdId)
-      var teste = 'testevariavel'
-*/
 
       //--------- criando os botões editar e excluir ------------
 
@@ -178,7 +163,6 @@
       tabela.appendChild(tr)
 
       //incrementando ID
-      // x++  
     })
   }
 </script>
@@ -198,7 +182,7 @@
     var settings = {
       "async": false,
       "crossDomain": true,
-      "url": "http://localhost:3000/orcamentos" + id,
+      "url": "http://localhost:3000/orcamentos/" + id,
       "method": "PUT",
       "headers": {
         "Content-Type": "application/json",
@@ -228,14 +212,14 @@
     var settings = {
       "async": false,
       "crossDomain": true,
-      "url": "http://localhost:3000/orcamentos",
+      "url": "http://localhost:3000/orcamentos/",
       "method": "POST",
       "headers": {
         "Content-Type": "application/json",
         "Accept": "/",
         "Cache-Control": "no-cache",
 
-        // "Host": "http://localhost:3000/orcamentos",
+        // "Host": "http://localhost:3000",
         // "Accept-Encoding": "gzip, deflate",
         // "Content-Length": "100",
         // "Connection": "keep-alive",
@@ -259,13 +243,13 @@
     var settings = {
       "async": false,
       "crossDomain": true,
-      "url": "http://localhost:3000/orcamentos" + id,
-      "method": "DELETE",
+      "url": "http://localhost:3000/orcamentos/" + id,
+      "method": "DELETE", 
       "headers": {
         "Content-Type": "application/json",
         "Accept": "/",
         "Cache-Control": "no-cache",
-        // "Host": "http://localhost:3000/orcamentos",
+        //  "Host": "http://localhost:3000",
         // "Accept-Encoding": "gzip, deflate",
         // "Content-Length": "0",
         // "Connection": "keep-alive",

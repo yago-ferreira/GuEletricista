@@ -1,6 +1,6 @@
 const express = require('express') //importacao do pacote
 const app = express() //instanciando express
-// const cors = require('cors')
+const cors = require('cors')
 
 
 const orcamentos = [
@@ -37,10 +37,17 @@ const orcamentos = [
     servico: 'Instalação de ar condicionado',
     email: 'teste3@hotmail.com',
     InformaçõesAdicionais: '220v'
+  },
+
+  {
+    id: "54151515",
+    servico: 'Instalação de uma lâmpada',
+    email: 'test4@gmail.com',
+    InformaçõesAdicionais: 'test'
   }
 ]
 
-// app.use(cors()) //habilitando cors na nossa aplicacao
+app.use(cors()) //habilitando cors na nossa aplicacao
 
 app.get('/orcamentos', function (req, res) { //endereco da requisicao onde e retornado orçamentos
   res.send(orcamentos)
