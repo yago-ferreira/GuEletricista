@@ -1,0 +1,10 @@
+
+#painelCreate{
+     display: none; 
+}
+
+#btnAdicionar{
+    position: absolute;
+     right: 127px;
+     top: 40px;
+}

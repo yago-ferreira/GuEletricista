@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <!-- Bootstrap 4.0 CSS-->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href="style.css">
+
+  <title>Orçamentos Front</title>
+</head>
+
+<body>
+
+    <!-- botão adicionar orçamentos-->
+    <button id=btnAdicionar type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false"
+      autocomplete="off" onclick="aparecePainel()">Adicionar Novo Orçamentos</button>
+
+    <!-- Titulo -->
+    <h1>Lista de orçamentos.</h1>
+
+    <!-- Painel de criar orçamento -->
+    <form>
+      <div id=painelCreate class="form-row">
+        <div class="form-group col-md-6">
+          <legend>Criar um novo orçamento: </legend>
+          <div class="row">
+            <div class="col">
+              <input id="servico1" type="text" class="form-control" placeholder="Serviço">
+            </div>
+          </div>
+          <label for="inputEmail4 ">Email</label>
+          <input type="email" class="form-control" id="email1" placeholder="Email">
+        </div>
+        <div class="form-group col-md-6">
+          <legend>Informações Adicionais</legend>
+          <input type="text" class="form-control" id="adicionais1" placeholder="Informações Adicionais">
+        </div>
+        <button onclick="addOrcamento(document.getElementById('servico1').value,document.getElementById('email1').value,
+        document.getElementById('adicionais1').value)" type="submit" class="btn btn-primary">Confirmar</button>
+      </div>
+    </form>
+    <br>
+
+    <!-- Tabela de orçamentos-->
+    <table border="1" class="table">
+      <thead>
+        <tr class="thead-dark">
+          <th>Serviço</th>
+          <th>E-mail</th>
+          <th>Editar</th>
+          <th>Excluir</th>
+        </tr>
+      </thead>
+      <tbody id="tabela-orcamentos">
+      </tbody>
+    </table>
+
+    <!-- Modal editar orçamentos -->
+    <div class="modal fade" id="modalEditar" tabindex="-1" role="dialog" aria-labelledby="TituloModalCentralizado"
+      aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="TituloModalCentralizado">Alterar informações do orçamento</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+
+            Serviço: <input id="servico" type="text"><br>
+            Email: <input id="email" type="text"><br>
+            Informações Adicionais: <input id="adicionais" type="text">
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+            <button onclick="edit_User(Id1, document.getElementById('servico').value,document.getElementById('email').value,
+          document.getElementById('adicionais').value)" type="button" class="btn btn-primary">Salvar mudanças</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--Div fechando container-->
+  </div>
+
+  <!-- jQuery e Bootstrap-->
+  <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+
+</body>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
+
+<!-- tabela contendo as informações de todos os orçamentos da API//-->
+<script>
+  // var x = 0
+
+  axios.get('http://localhost:3000/orcamentos')
+    .then(response => criaListaDinamicaApi(response.data))
+    .catch(error => console.log(error))
+
+  const criaListaDinamicaApi = (listaOrcamentos) => {
+    console.log('Listagem de Orcamentos => ', listaOrcamentos)
+
+    const tabela = document.getElementById('tabela-orcamentos')
+    listaOrcamentos.map(orcamentos => {
+      //A cada iteração é criado uma row (tr) e nessa row tem 3 elementos (td) 
+      //cada td é referente ao servico, email e os botoes por isso o codigo se repete na parte de criação de td
+      //Todos os td são inseridos n tr e no final da iteração ele é inserido na tabela, isso será repetido conforme
+      // a quantidade de orçamentos que a api ta retornando
+
+
+      const tr = document.createElement('tr')
+      const td = document.createElement('td')
+      const p = document.createElement('p')
+
+      // exibindo servico da API
+      p.innerHTML = ` ${orcamentos.servico}`
+      td.appendChild(p)
+      tr.appendChild(td)
+
+      const tdEmail = document.createElement('td')
+      const pEmail = document.createElement('p')
+
+      //exibindo email da API
+      pEmail.innerHTML = ` ${orcamentos.email}`
+      tdEmail.appendChild(pEmail)
+      tr.appendChild(tdEmail)
+/*
+      //------ exibindo ID ----------------------
+      const tdId = document.createElement('td')
+      tdId.style.display = 'none';
+      const pId = document.createElement('p')
+      pId.setAttribute('id', 'Id_User' + x)
+      pId.style.display = 'none';
+
+      pId.innerHTML = ` ${orcamentos.id}`
+      tdId.appendChild(pId)
+      tr.appendChild(tdId)
+      var teste = 'testevariavel'
+*/
+
+      //--------- criando os botões editar e excluir ------------
+
+      //button editar
+      const tdBtnEditar = document.createElement('td')
+      tdBtnEditar.setAttribute('onclick', "setId('" + `${orcamentos.id}` + "')")
+      tdBtnEditar.setAttribute('data-target', "#modalEditar")
+      tdBtnEditar.setAttribute('data-toggle', "modal")
+      const btnEditar = document.createElement('button')
+      btnEditar.style = "background: SteelBlue;"
+
+      btnEditar.innerHTML = 'Editar'
+      tdBtnEditar.appendChild(btnEditar)
+      tr.appendChild(tdBtnEditar)
+
+      //------------button excluir------------------
+      const tdBtnExcluir = document.createElement('td')
+      tdBtnExcluir.setAttribute('onclick', "deletOrcamento('" + `${orcamentos.id}` + "')")
+      const btnExcluir = document.createElement('button')
+      btnExcluir.style = "background: Tomato;"
+
+      btnExcluir.innerHTML = 'Apagar'
+      tdBtnExcluir.appendChild(btnExcluir)
+      tr.appendChild(tdBtnExcluir)
+
+
+      //fechando a tabela 
+      tabela.appendChild(tr)
+
+      //incrementando ID
+      // x++  
+    })
+  }
+</script>
+
+
+<script type="text/javascript">
+
+  var Id1;
+
+  function setId(Id) {
+    Id1 = Id;
+    document.getElementById("tdBtnEditar");
+  }
+
+  //Atualiza as informações do orçamento indicado pela ID. contendo o servico, o email e as informaçoes adicionais do orçamento.
+  function edit_User(id, servico, email, adicionais) {
+    var settings = {
+      "async": false,
+      "crossDomain": true,
+      "url": "http://localhost:3000/orcamentos" + id,
+      "method": "PUT",
+      "headers": {
+        "Content-Type": "application/json",
+        "cache-control": "no-cache",
+
+      },
+      "processData": false,
+      "data": "{\r\n       \r\n        \"email\": \"" + email + "\",\r\n        \"servico\": \"" + servico + "\",\r\n        \"adicionais\": \"" + adicionais + "\"\r\n    }"
+
+    }
+
+    $.ajax(settings).done(function (response) {
+      console.log(response);
+    });
+    console.log(adicionais, email, servico, id);
+    window.location.reload();
+
+    //função que faz o painel de criar orçamentos aparecer 
+  }
+  function aparecePainel() {
+    document.getElementById("painelCreate").style.display = 'block';
+  }
+
+  //Insere um orçamento no banco de dados
+  function addOrcamento(servico, email, adicionais) {
+
+    var settings = {
+      "async": false,
+      "crossDomain": true,
+      "url": "http://localhost:3000/orcamentos",
+      "method": "POST",
+      "headers": {
+        "Content-Type": "application/json",
+        "Accept": "/",
+        "Cache-Control": "no-cache",
+
+        // "Host": "http://localhost:3000/orcamentos",
+        // "Accept-Encoding": "gzip, deflate",
+        // "Content-Length": "100",
+        // "Connection": "keep-alive",
+        "cache-control": "no-cache"
+      },
+      "processData": false,
+      "data": " {\r\n         \"adicionais\": \"" + adicionais + "\",\r\n        \"email\": \"" + email + "\",\r\n        \"servico\": \"" + servico + "\"\r\n    }"
+
+    }
+
+    $.ajax(settings).done(function (response) {
+      console.log(response);
+    });
+
+
+  }
+
+
+  //Deleta o usuário indicado pela ID.
+  function deletOrcamento(id) {
+    var settings = {
+      "async": false,
+      "crossDomain": true,
+      "url": "http://localhost:3000/orcamentos" + id,
+      "method": "DELETE",
+      "headers": {
+        "Content-Type": "application/json",
+        "Accept": "/",
+        "Cache-Control": "no-cache",
+        // "Host": "http://localhost:3000/orcamentos",
+        // "Accept-Encoding": "gzip, deflate",
+        // "Content-Length": "0",
+        // "Connection": "keep-alive",
+        "cache-control": "no-cache"
+      },
+      "processData": false,
+      "data": ""
+    }
+
+    $.ajax(settings).done(function (response) {
+      console.log(response);
+
+      window.location.reload();
+      alert('orçamento excluido com sucesso')
+
+    });
+  }
+
+</script>
+
+</html>

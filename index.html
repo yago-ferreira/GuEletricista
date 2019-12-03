@@ -58,7 +58,7 @@
         <div class="row">
           <div class="col-lg-10 mx-auto">
             <h1 class="text-uppercase">
-              <strong>Gu Eletricista !</strong>
+              <strong>Gu Eletricista</strong>
             </h1>
             <hr>
           </div>
@@ -225,8 +225,51 @@
 
     <section class="bg-dark text-white">
       <div class="container text-center">
-        <h2 class="mb-4">----------</h2>
-        <a class="btn btn-light btn-xl sr-button" href="-- linha da página facebook">Dúvidas?</a>
+        <h2 class="mb-4">Utilizando Fetch API</h2>
+          <div class="get" onclick="getData()">Carregar Dados</div>
+          <div class = "input-bar">
+              <select id="method">
+                <option value="GET">GET</option>
+                <option value="POST">POST</option>
+                <option value="PUT">PUT</option>
+              </select>
+              <input type="text" value="" placeholder="Enter request URL">
+
+
+              <div class="list-group">
+  <a href="#" class="list-group-item list-group-item-action flex-column align-items-start active">
+    <div class="d-flex w-100 justify-content-between">
+      <h5 class="mb-1">Cabeçalho do item</h5>
+      <small>3 dias atrás</small>
+    </div>
+    <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
+    <small>Donec id elit non mi porta.</small>
+  </a>
+  <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+    <div class="d-flex w-100 justify-content-between">
+      <h5 class="mb-1">Cabeçalho do item</h5>
+      <small class="text-muted">3 dias atrás</small>
+    </div>
+    <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
+    <small class="text-muted">Donec id elit non mi porta.</small>
+  </a>
+  <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+    <div class="d-flex w-100 justify-content-between">
+      <h5 class="mb-1">Cabeçalho do item</h5>
+      <small class="text-muted">3 dias atrás</small>
+    </div>
+    <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
+    <small class="text-muted">Donec id elit non mi porta.</small>
+  </a>
+</div>
+
+          </div>
+          <div class="container">
+              <div class="container">
+                  <cod id="results"></cod>
+              </div>
+          </div>
+        
       </div>
     </section>
 
@@ -234,9 +277,11 @@
       <div class="container">
         <div class="row">
           <div class="col-lg-8 mx-auto text-center">
+            
             <h2 class="section-heading">Nós envia seu pedido de orçamento</h2>
             <hr class="my-4">
             <p class="mb-5">Retornaremos o pedido por e-mail ou telefone.</p>
+            <a class="btn btn-light btn-xl sr-button" href="-- linha da página facebook">Dúvidas?</a>
           </div>
         </div>
         <div class="row">
@@ -264,7 +309,7 @@
     <script src="atalho/magnific-popup/jquery.magnific-popup.min.js"></script>
 
 
-    <script src="js/creative.min.js"></script>
+    <script src="js/creative.js"></script>
 
   </body>
 

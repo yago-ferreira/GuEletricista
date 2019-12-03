@@ -90,3 +90,10 @@
   });
 
 })(jQuery); // End of use strict
+
+const getData = async () => {
+    const url = document.querySelector(['input']),
+    code = document.querySelector('#results'),
+    select = document.querySelector('#method'),
+    method = select.value 
+}
